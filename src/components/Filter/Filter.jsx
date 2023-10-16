@@ -1,10 +1,16 @@
-import { useDispatch, useSelector } from "react-redux";
-import { FilterContainer, FilterInput } from "./Filter.styled";
-import { setFilter, getFilter } from '../../redux/filterSlice';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setFilter } from '../../redux/filterSlice';
+import { selectFilter } from '../../redux/selectors';
+import { FilterContainer, FilterInput } from './Filter.styled';
 
 export const Filter = () => {
   const dispatch = useDispatch();
-  const filter = useSelector(getFilter);
+  const filter = useSelector(selectFilter);
+
+  const handleFilterChange = (e) => {
+    dispatch(setFilter(e.target.value.toLowerCase()));
+  };
 
   return (
     <FilterContainer>
@@ -12,7 +18,7 @@ export const Filter = () => {
         type="text"
         name="filter"
         value={filter}
-        onChange={e => dispatch(setFilter(e.target.value))}
+        onChange={handleFilterChange}
         placeholder="Find contacts by name"
       />
     </FilterContainer>
